@@ -53,5 +53,4 @@ dkms.conf
 
 # Project
 *.DS_Store
-.vscode
-main.c
+ft_ssl
