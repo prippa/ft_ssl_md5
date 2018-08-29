@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include "ft_printf.h"
 
 # define BUFF_SIZE 80
 # define ABS(x) (((x) < 0) ? -(x) : (x))

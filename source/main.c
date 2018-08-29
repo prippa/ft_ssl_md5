@@ -10,13 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ssl.h"
+#include "ssl.h"
 
 int		main(int argc, char **argv)
 {
-	ft_printf("%~s\n", F_BOLD_CYAN, "Hello!");
-	sleep(3);
-	ft_clear();
-	ft_printf("%~s\n", F_BOLD_RED, "World!");
+	
 	return (0);
 }
