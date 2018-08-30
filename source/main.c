@@ -17,6 +17,6 @@ int		main(int argc, char **argv)
 	if (argc == 1)
 		ssl_interactive_read();
 	else
-		;
+		ssl_cmd_check(argv + 1, BASE_MOD);
 	return (0);
 }

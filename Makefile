@@ -12,7 +12,7 @@
 
 NAME		=	ft_ssl
 # FLAGS		= 	-Wall -Werror -Wextra
-CC			=	gcc
+CC			=	gcc -g
 
 DIR_INC		=	./includes/
 DIR_SRC		=	./source/
@@ -29,11 +29,12 @@ HEAD_MD5	=	md5.h
 HEAD_SHA	=	sha.h
 
 #-------------------------- Source files ---------------------------------------
-C_SSL		= 	main.c ssl_interactive_read.c
+C_SSL		= 	main.c ssl_interactive_read.c ssl_dispatcher.c ssl_trash.c\
+				ssl_print_info.c
 
-C_MD5		= 	
+C_MD5		= 	ssl_md5.c
 
-C_SHA		= 	
+C_SHA		= 	ssl_sha.c
 
 
 OBJ 		= 	$(addprefix $(DIR_OBJ), $(C_SSL:.c=.o) $(C_MD5:.c=.o)\

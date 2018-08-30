@@ -144,5 +144,6 @@ void				ft_clear(void);
 void				*ft_memrev(void *dst, size_t n);
 char				*ft_strjoin_free(char **dst, const char *src,
 						size_t dstsize, size_t srcsize);
+void				ft_perror_exit(const char *message);
 
 #endif
