@@ -29,7 +29,7 @@ HEAD_MD5	=	md5.h
 HEAD_SHA	=	sha.h
 
 #-------------------------- Source files ---------------------------------------
-C_SSL		= 	main.c
+C_SSL		= 	main.c ssl_interactive_read.c
 
 C_MD5		= 	
 

@@ -15,4 +15,6 @@
 
 # include "libft.h"
 
+void			ssl_interactive_read(void);
+
 #endif

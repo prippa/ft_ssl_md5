@@ -14,6 +14,9 @@
 
 int		main(int argc, char **argv)
 {
-	
+	if (argc == 1)
+		ssl_interactive_read();
+	else
+		;
 	return (0);
 }
