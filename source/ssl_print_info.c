@@ -1,4 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ssl_print_info.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/09/01 06:44:01 by prippa            #+#    #+#             */
+/*   Updated: 2018/09/01 06:44:03 by prippa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ssl.h"
+
+void		ssl_print_hash_flags_usage(const char *cmd)
+{
+	ft_printf("unknown option '%s'\n", cmd);
+	ft_putstr("options are\n");
+	ft_putstr("-p\t\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
+	ft_putstr("-q\t\t\tquiet mode\n");
+	ft_putstr("-r\t\t\treverse the format of the output\n");
+	ft_putstr("[-s string]\tprint the sum of the given string\n");
+	ft_printf("error in %s\n", g_string_hash[g_ssl.type]);
+}
 
 static void	ssl_print_commands(void)
 {

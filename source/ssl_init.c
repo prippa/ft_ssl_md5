@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ssl_md5.c                                          :+:      :+:    :+:   */
+/*   ssl_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/01 06:42:29 by prippa            #+#    #+#             */
-/*   Updated: 2018/09/01 06:42:31 by prippa           ###   ########.fr       */
+/*   Created: 2018/09/01 08:49:29 by prippa            #+#    #+#             */
+/*   Updated: 2018/09/01 08:49:30 by prippa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "md5.h"
+#include "ssl.h"
 
-void	ssl_md5(void)
+struct s_ssl g_ssl;
+
+void		ssl_init(char **argv)
 {
-	ft_printf("md5 zaglushka\n");
+	ft_bzero(&g_ssl, sizeof(t_ssl));
+	g_ssl.argv = argv;
 }

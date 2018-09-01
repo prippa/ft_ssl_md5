@@ -1,18 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ssl_md5.c                                          :+:      :+:    :+:   */
+/*   ssl_flag_function.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/01 06:42:29 by prippa            #+#    #+#             */
-/*   Updated: 2018/09/01 06:42:31 by prippa           ###   ########.fr       */
+/*   Created: 2018/09/01 10:01:22 by prippa            #+#    #+#             */
+/*   Updated: 2018/09/01 10:01:23 by prippa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "md5.h"
+#include "ssl.h"
 
-void	ssl_md5(void)
+int		ssl_flag_p(void)
 {
-	ft_printf("md5 zaglushka\n");
+	g_ssl.f[SSL_FLAG_P] = 1;
+	ssl_read(0);
+	g_hash_func[g_ssl.type]();
+	ssl_del();
+	return (1);
+}
+
+int		ssl_flag_q(void)
+{
+	g_ssl.f[SSL_FLAG_Q] = 1;
+	return (1);
+}
+
+int		ssl_flag_r(void)
+{
+	g_ssl.f[SSL_FLAG_R] = 1;
+	return (1);
+}
+
+int		ssl_flag_s(void)
+{
+	g_ssl.f[SSL_FLAG_S] = 1;
+	// logic
+	g_hash_func[g_ssl.type]();
+	ssl_del();
+	return (1);
 }

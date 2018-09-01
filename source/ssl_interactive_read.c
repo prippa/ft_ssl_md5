@@ -12,11 +12,25 @@
 
 #include "ssl.h"
 
-void	ssl_interactive_read(void)
+static void	ssl_ir_action(const char *line)
+{
+	char **args;
+
+	if (ft_strcmp(line, ""))
+	{
+		if (!(args = ft_strsplit(line, ' ')))
+			ft_perror_exit("malloc failed");
+		g_ssl.argv = args;
+		ssl_parser(INTERACTIVE_MOD);
+		ft_arrdel(&args);
+		ssl_refresh();
+	}
+}
+
+void		ssl_interactive_read(void)
 {
 	int		random_error;
 	char	*line;
-	char	**args;
 
 	ft_putstr("ft_ssl> ");
 	while ((random_error = get_next_line(0, &line)) == 1)
@@ -24,15 +38,9 @@ void	ssl_interactive_read(void)
 		if (!ft_strcmp(line, "exit"))
 		{
 			ft_strdel(&line);
-			break ;
+			break;
 		}
-		if (ft_strcmp(line, ""))
-		{
-			if (!(args = ft_strsplit(line, ' ')))
-				ft_perror_exit("malloc failed");
-			ssl_cmd_check(args, INTERACTIVE_MOD);
-			ft_arrdel(&args);
-		}
+		ssl_ir_action(line);
 		ft_strdel(&line);
 		ft_putstr("ft_ssl> ");
 	}
