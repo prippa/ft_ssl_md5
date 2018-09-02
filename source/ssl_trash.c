@@ -14,7 +14,6 @@
 
 void		ssl_refresh(void)
 {
-	ft_strdel(&g_ssl.s);
 	ft_bzero(&g_ssl, sizeof(t_ssl));
 }
 

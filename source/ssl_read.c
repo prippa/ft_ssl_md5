@@ -19,6 +19,7 @@ void		ssl_read(int fd)
 
 	if (!(g_ssl.s = ft_memalloc(1)))
 		ssl_fatal_error("malloc failed");
+	g_ssl.size = ft_strlen(g_ssl.s);
 	while ((i = read(fd, buf, SSL_BUF_SIZE)) > 0)
 	{
 		buf[i] = 0;
@@ -28,19 +29,21 @@ void		ssl_read(int fd)
 	}
 	if (i == -1)
 		ssl_fatal_error("read failed");
-	if (g_ssl.f[SSL_FLAG_P])
-	{
-		write(1, g_ssl.s, g_ssl.size);
-		g_ssl.f[SSL_FLAG_P] = 0;
-	}
 }
 
-void		ssl_read_from_file(const char *file_name)
+void		ssl_read_from_stdin(void)
 {
-	int fd;
+	ssl_read(0);
+	g_hash_func[g_ssl.type]();
+	ssl_del();
+}
 
-	if ((fd = open(file_name, O_RDONLY)) == -1 || read(fd, NULL, 0) == -1)
-		ssl_fatal_error("open failed");
+void		ssl_read_from_file(int fd, char *file_name)
+{
+	g_ssl.curent = FILE_MOD;
 	ft_strcpy(g_ssl.file_name, file_name);
 	ssl_read(fd);
+	close(fd);
+	g_hash_func[g_ssl.type]();
+	ssl_del();
 }

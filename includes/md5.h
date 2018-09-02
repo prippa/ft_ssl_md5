@@ -15,4 +15,7 @@
 
 # include "ssl.h"
 
+# define MD5_TAIL(x) (((x) % 64) < 56 ?\
+(64 - ((x) % 64)) : (64 + (64 - ((x) % 64))))
+
 #endif

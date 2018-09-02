@@ -14,12 +14,31 @@
 
 static void	ssl_validate_file(void)
 {
+	int fd;
 
+	if (!g_ssl.f[SSL_FLAG_P] && !g_ssl.f[SSL_FLAG_S]
+		&& !g_ssl.argv[g_ssl.i])
+		ssl_read_from_stdin();
+	else
+	{
+		while (g_ssl.argv[g_ssl.i])
+		{
+			if ((fd = open(g_ssl.argv[g_ssl.i], O_RDONLY)) == -1
+				|| read(fd, NULL, 0) == -1)
+			{
+				perror(g_ssl.argv[g_ssl.i]);
+				g_ssl.err_flag = 1;
+			}
+			else
+				ssl_read_from_file(fd, g_ssl.argv[g_ssl.i]);
+			++g_ssl.i;
+		}
+	}
 }
 
 static int	ssl_check_flags(const char *f)
 {
-	int			i;
+	int i;
 
 	while (*f)
 	{
@@ -27,9 +46,14 @@ static int	ssl_check_flags(const char *f)
 		while (++i < SSL_FLAG_SIZE)
 			if (g_hash_flags[i] == *f)
 			{
-				g_ssl.tmp = f;
-				if (!(g_hash_flags_func[i]()))
-					return (1);
+				if (*f == 's')
+				{
+					g_ssl.tmp = f;
+					if (!(g_hash_flags_func[i]()))
+						return (1);
+					return (0);
+				}
+				g_hash_flags_func[i]();
 				break ;
 			}
 		if (i == SSL_FLAG_SIZE)
@@ -44,10 +68,10 @@ static int	ssl_parse_flags(void)
 	while (g_ssl.argv[g_ssl.i] && *g_ssl.argv[g_ssl.i] == '-')
 	{
 		if ((ssl_check_flags(g_ssl.argv[g_ssl.i] + 1)))
-			return (1);
+			return (0);
 		++g_ssl.i;
 	}
-	return (0);
+	return (1);
 }
 
 static int	ssl_check_cmd(void)
@@ -60,26 +84,24 @@ static int	ssl_check_cmd(void)
 		{
 			g_ssl.type = i;
 			++g_ssl.i;
-			return (1);
+			return (0);
 		}
-	return (0);
+	return (1);
 }
 
 void		ssl_parser(t_mod mod)
 {
-	if (ssl_check_cmd())
+	if (!ssl_check_cmd())
 	{
-		if (ssl_parse_flags())
+		if (!ssl_parse_flags())
 		{
 			ssl_print_hash_flags_usage(g_ssl.argv[g_ssl.i]);
-			return ;
+			g_ssl.err_flag = 1;
 		}
-		ssl_validate_file();
-		if (!g_ssl.f[SSL_FLAG_P] && !g_ssl.f[SSL_FLAG_S] && !g_ssl.f_f)
-		{
-			ssl_read(0);
-			g_hash_func[g_ssl.type]();
-		}
+		else
+			ssl_validate_file();
+		if (g_ssl.err_flag && mod == INTERACTIVE_MOD)
+			ft_printf("error in %s\n", g_string_hash[g_ssl.type]);
 	}
 	else
 	{

@@ -17,5 +17,5 @@ struct s_ssl g_ssl;
 void		ssl_init(char **argv)
 {
 	ft_bzero(&g_ssl, sizeof(t_ssl));
-	g_ssl.argv = argv;
+	g_ssl.argv = argv + 1;
 }
