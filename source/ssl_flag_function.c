@@ -16,7 +16,7 @@ int		ssl_flag_p(void)
 {
 	g_ssl.f[SSL_FLAG_P] = 1;
 	g_ssl.curent = P_MOD;
-	ssl_read(0);
+	ssl_read(0, SSL_BUF_SIZE);
 	write(1, g_ssl.s, g_ssl.size);
 	g_hash_func[g_ssl.type]();
 	ssl_del();

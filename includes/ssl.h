@@ -14,6 +14,7 @@
 # define SSL_H
 
 # include "libft.h"
+# include <sys/stat.h>
 
 /*
 ************************************ Data **************************************
@@ -35,7 +36,7 @@ typedef enum			e_mod
 
 typedef enum			e_flags
 {
-	SSL_FLAG_P = 1,
+	SSL_FLAG_P,
 	SSL_FLAG_Q,
 	SSL_FLAG_R,
 	SSL_FLAG_S,
@@ -48,6 +49,7 @@ typedef struct			s_ssl
 	int					type;
 	char				f[SSL_FLAG_SIZE];
 	char				file_name[FILENAME_MAX + 1];
+	char				*tail;
 	char				*s;
 	size_t				size;
 	int					i;
@@ -63,7 +65,7 @@ typedef struct			s_ssl
 void					ssl_init(char **argv);
 void					ssl_read_from_file(int fd, char *file_name);
 void					ssl_read_from_stdin(void);
-void					ssl_read(int fd);
+void					ssl_read(int fd, const size_t size);
 void					ssl_refresh(void);
 void					ssl_del(void);
 void					ssl_fatal_error(const char *message);

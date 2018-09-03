@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ssl_trash.c                                        :+:      :+:    :+:   */
+/*   ft_strjoin_free.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/09/01 06:44:17 by prippa            #+#    #+#             */
-/*   Updated: 2018/09/01 06:44:19 by prippa           ###   ########.fr       */
+/*   Created: 2018/08/25 12:59:59 by prippa            #+#    #+#             */
+/*   Updated: 2018/08/25 13:00:00 by prippa           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ssl.h"
+#include "libft.h"
 
-void		ssl_refresh(void)
+char	*ft_memjoin_free(void **dst, const void *src,
+			size_t dstsize, size_t srcsize)
 {
-	ft_bzero(&g_ssl, sizeof(t_ssl));
-}
+	void			*tmp;
 
-void		ssl_del(void)
-{
-	ft_strdel(&g_ssl.s);
-	ft_strdel(&g_ssl.tail);
-}
-
-void		ssl_fatal_error(const char *message)
-{
-	ssl_del();
-	ft_perror_exit(message);
+	tmp = *dst;
+	if (!(*dst = (char *)malloc(sizeof(char) * (dstsize + srcsize))))
+		return (NULL);
+	ft_memcpy(*dst, tmp, dstsize);
+	ft_memcpy(&(*dst)[dstsize], src, srcsize);
+	free(tmp);
+	return (*dst);
 }

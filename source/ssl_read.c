@@ -12,15 +12,15 @@
 
 #include "ssl.h"
 
-void		ssl_read(int fd)
+void		ssl_read(int fd, const size_t size)
 {
-	char	buf[SSL_BUF_SIZE + 1];
+	char	buf[size + 1];
 	int		i;
 
 	if (!(g_ssl.s = ft_memalloc(1)))
 		ssl_fatal_error("malloc failed");
-	g_ssl.size = ft_strlen(g_ssl.s);
-	while ((i = read(fd, buf, SSL_BUF_SIZE)) > 0)
+	g_ssl.size = 0;
+	while ((i = read(fd, buf, size)) > 0)
 	{
 		buf[i] = 0;
 		if (!(g_ssl.s = ft_strjoin_free(&g_ssl.s, buf, g_ssl.size, i)))
@@ -33,16 +33,19 @@ void		ssl_read(int fd)
 
 void		ssl_read_from_stdin(void)
 {
-	ssl_read(0);
+	ssl_read(0, SSL_BUF_SIZE);
 	g_hash_func[g_ssl.type]();
 	ssl_del();
 }
 
 void		ssl_read_from_file(int fd, char *file_name)
 {
+	struct stat buff;
+
+	stat(file_name, &buff);
 	g_ssl.curent = FILE_MOD;
 	ft_strcpy(g_ssl.file_name, file_name);
-	ssl_read(fd);
+	ssl_read(fd, buff.st_size);
 	close(fd);
 	g_hash_func[g_ssl.type]();
 	ssl_del();
