@@ -19,6 +19,7 @@ int		ssl_flag_p(void)
 	ssl_read(0, SSL_BUF_SIZE);
 	write(1, g_ssl.s, g_ssl.size);
 	g_hash_func[g_ssl.type]();
+	ssl_print_hash();
 	ssl_del();
 	return (1);
 }
@@ -47,6 +48,7 @@ int		ssl_flag_s(void)
 		ssl_fatal_error("malloc failed");
 	g_ssl.size = ft_strlen(g_ssl.s);
 	g_hash_func[g_ssl.type]();
+	ssl_print_hash();
 	ssl_del();
 	return (1);
 }

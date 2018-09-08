@@ -37,6 +37,7 @@ void		ssl_read_from_stdin(void)
 {
 	ssl_read(0, SSL_BUF_SIZE);
 	g_hash_func[g_ssl.type]();
+	ssl_print_hash();
 	ssl_del();
 }
 
@@ -50,5 +51,6 @@ void		ssl_read_from_file(int fd, char *file_name)
 	ssl_read(fd, buff.st_size);
 	close(fd);
 	g_hash_func[g_ssl.type]();
+	ssl_print_hash();
 	ssl_del();
 }

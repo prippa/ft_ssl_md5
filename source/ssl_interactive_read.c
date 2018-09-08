@@ -20,6 +20,7 @@ static void	ssl_ir_action(const char *line)
 	{
 		if (!(args = ft_strsplit(line, ' ')))
 			ft_perror_exit("malloc failed");
+		ft_str_to_upper(args);
 		g_ssl.argv = args;
 		ssl_parser(INTERACTIVE_MOD);
 		ft_arrdel(&args);

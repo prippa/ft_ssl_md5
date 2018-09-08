@@ -53,22 +53,17 @@ static void	ssl_md5_prepare_hash_string(t_md5 *md)
 {
 	if (!(g_ssl.res_hash_str = (uint8_t *)malloc(sizeof(uint8_t) * 16)))
 		ssl_fatal_error("malloc failed");
-	g_ssl.res_hash_str[0] = md->state[0];
-	g_ssl.res_hash_str[1] = md->state[0] >> 8;
-	g_ssl.res_hash_str[2] = md->state[0] >> 16;
-	g_ssl.res_hash_str[3] = md->state[0] >> 24;
-	g_ssl.res_hash_str[4] = md->state[1];
-	g_ssl.res_hash_str[5] = md->state[1] >> 8;
-	g_ssl.res_hash_str[6] = md->state[1] >> 16;
-	g_ssl.res_hash_str[7] = md->state[1] >> 24;
-	g_ssl.res_hash_str[8] = md->state[2];
-	g_ssl.res_hash_str[9] = md->state[2] >> 8;
-	g_ssl.res_hash_str[10] = md->state[2] >> 16;
-	g_ssl.res_hash_str[11] = md->state[2] >> 24;
-	g_ssl.res_hash_str[12] = md->state[3];
-	g_ssl.res_hash_str[13] = md->state[3] >> 8;
-	g_ssl.res_hash_str[14] = md->state[3] >> 16;
-	g_ssl.res_hash_str[15] = md->state[3] >> 24;
+	md->i = -1;
+	md->j = 0;
+	while (md->j < 4)
+	{
+		g_ssl.res_hash_str[++md->i] = md->state[md->j];
+		g_ssl.res_hash_str[++md->i] = md->state[md->j] >> 8;
+		g_ssl.res_hash_str[++md->i] = md->state[md->j] >> 16;
+		g_ssl.res_hash_str[++md->i] = md->state[md->j] >> 24;
+		++md->j;
+	}
+	g_ssl.size = 16;
 }
 
 static void	ssl_md5_finish(t_md5 *md)
@@ -113,20 +108,4 @@ void		ssl_md5(void)
 	ssl_md5_run(&md);
 	ssl_md5_finish(&md);
 	ssl_md5_prepare_hash_string(&md);
-	// TESTTS
-	md.i = -1;
-	while (++md.i < 16)
-		ft_printf("%.2x", g_ssl.res_hash_str[md.i]);
-	ft_putchar('\n');
-	// ft_putstr("******************************************************\n");
- 	// ft_printf("md5 zaglushka\nstream - [%s]\nsize - (%d)\nsizelen - (%d)\nMod - (%d)\n",
-	// g_ssl.s, g_ssl.size, ft_strlen(g_ssl.s), g_ssl.curent);
-	// if (g_ssl.curent == FILE_MOD)
-	// 	ft_printf("File name - [%s]\n", g_ssl.file_name);
-	// u_int8_t *ptr = (u_int8_t *)g_ssl.s;
-	// size_t i = -1;
-	// while (++i < g_ssl.size)
-	// 	ft_printf("%.2x ", ptr[i], i);
-	// ft_printf("size - %d\n", g_ssl.size);
-	// ft_putstr("******************************************************\n");
 }

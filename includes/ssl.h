@@ -69,6 +69,7 @@ void					ssl_read(int fd, const size_t size);
 void					ssl_refresh(void);
 void					ssl_del(void);
 void					ssl_fatal_error(const char *message);
+void					ssl_print_hash(void);
 void					ssl_print_hash_flags_usage(const char *cmd);
 void					ssl_print_error_message(const char *cmd);
 void					ssl_print_usage_exit(const char *cmd);
@@ -94,7 +95,7 @@ int						ssl_flag_s(void);
 
 static const char			*g_string_hash[SSL_CMD_SIZE] =
 {
-	"md5", "sha256", "sha512"
+	"MD5", "SHA256", "SHA512"
 };
 
 typedef void	(*t_func_cmd)(void);
