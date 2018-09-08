@@ -49,13 +49,13 @@ typedef struct			s_ssl
 	int					type;
 	char				f[SSL_FLAG_SIZE];
 	char				file_name[FILENAME_MAX + 1];
-	char				*tail;
 	char				*s;
 	size_t				size;
 	int					i;
 	char				err_flag;
 	char				**argv;
 	const char			*tmp;
+	uint8_t				*res_hash_str;
 }						t_ssl;
 
 /*

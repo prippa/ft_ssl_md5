@@ -20,7 +20,7 @@ void		ssl_refresh(void)
 void		ssl_del(void)
 {
 	ft_strdel(&g_ssl.s);
-	ft_strdel(&g_ssl.tail);
+	ft_strdel((char **)&g_ssl.res_hash_str);
 }
 
 void		ssl_fatal_error(const char *message)

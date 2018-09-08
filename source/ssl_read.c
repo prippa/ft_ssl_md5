@@ -14,10 +14,11 @@
 
 void		ssl_read(int fd, const size_t size)
 {
-	char	buf[size + 1];
+	char	*buf;
 	int		i;
 
-	if (!(g_ssl.s = ft_memalloc(1)))
+	if (!(g_ssl.s = ft_memalloc(1))
+		|| !(buf = (char *)malloc(sizeof(char) * size + 1)))
 		ssl_fatal_error("malloc failed");
 	g_ssl.size = 0;
 	while ((i = read(fd, buf, size)) > 0)
@@ -27,6 +28,7 @@ void		ssl_read(int fd, const size_t size)
 			ssl_fatal_error("malloc failed");
 		g_ssl.size += i;
 	}
+	free(buf);
 	if (i == -1)
 		ssl_fatal_error("read failed");
 }

@@ -32,7 +32,7 @@ HEAD_SHA	=	sha.h
 C_SSL		= 	main.c ssl_interactive_read.c ssl_parser.c ssl_trash.c\
 				ssl_print_info.c ssl_read.c ssl_init.c ssl_flag_function.c
 
-C_MD5		= 	ssl_md5.c
+C_MD5		= 	ssl_md5.c ssl_md5_rounds.c
 
 C_SHA		= 	ssl_sha.c
 
