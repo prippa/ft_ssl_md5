@@ -17,6 +17,7 @@ void		ssl_read(int fd, const size_t size)
 	char	*buf;
 	int		i;
 
+	buf = NULL;
 	if (!(g_ssl.s = ft_memalloc(1))
 		|| !(buf = (char *)malloc(sizeof(char) * size + 1)))
 		ssl_fatal_error(MALLOC_ERR);

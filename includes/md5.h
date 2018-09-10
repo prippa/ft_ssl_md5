@@ -15,12 +15,11 @@
 
 # include "ssl.h"
 
-# define DBL_INT_ADD(a,b,c) if (a > 0xffffffff - c) ++b; a += c;
 # define F(x,y,z) (((x) & (y)) | ((~x) & (z)))
 # define G(x,y,z) (((x) & (z)) | ((y) & (~z)))
 # define H(x,y,z) ((x) ^ (y) ^ (z))
 # define I(x,y,z) ((y) ^ ((x) | (~z)))
-# define ROTLEFT(a,b) ((a << b) | (a >> (32-b)))
+
 # define FF(a,b,c,d,m,s,t) { a += F(b,c,d) + m + t; a = b + ROTLEFT(a,s); }
 # define GG(a,b,c,d,m,s,t) { a += G(b,c,d) + m + t; a = b + ROTLEFT(a,s); }
 # define HH(a,b,c,d,m,s,t) { a += H(b,c,d) + m + t; a = b + ROTLEFT(a,s); } 
@@ -33,7 +32,6 @@ typedef struct 			s_md5
 	uint32_t			state[4];
 	uint32_t			t[4];
 	uint32_t			m[16];
-	uint32_t			bits[2];
 	uint32_t			i;
 	uint32_t			j;
 }						t_md5;

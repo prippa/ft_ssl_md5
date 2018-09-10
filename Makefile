@@ -11,13 +11,14 @@
 # **************************************************************************** #
 
 NAME		=	ft_ssl
-# FLAGS		= 	-Wall -Werror -Wextra
+FLAGS		= 	-Wall -Werror -Wextra
 CC			=	gcc -g
 
 DIR_INC		=	./includes/
 DIR_SRC		=	./source/
 DIR_MD5		=	./source/md5/
-DIR_SHA		=	./source/sha/
+DIR_SHA256	=	./source/sha256/
+DIR_SHA512	=	./source/sha512/
 DIR_OBJ		= 	./obj/
 DIR_LIB		=	./libft/
 DIR_LIB_INC	=	$(DIR_LIB)includes/
@@ -26,7 +27,8 @@ LIBFT		=	$(DIR_LIB)libft.a
 #-------------------------- Header files ---------------------------------------
 HEAD_SSL	=	ssl.h
 HEAD_MD5	=	md5.h
-HEAD_SHA	=	sha.h
+HEAD_SHA256	=	sha256.h
+HEAD_SHA512	=	sha512.h
 
 #-------------------------- Source files ---------------------------------------
 C_SSL		= 	main.c ssl_interactive_read.c ssl_parser.c ssl_trash.c\
@@ -35,16 +37,19 @@ C_SSL		= 	main.c ssl_interactive_read.c ssl_parser.c ssl_trash.c\
 
 C_MD5		= 	ssl_md5.c ssl_md5_rounds.c
 
-C_SHA		= 	ssl_sha.c
+C_SHA256	= 	ssl_sha256.c ssl_sha224.c ssl_sha256_algo.c
+
+C_SHA512	= 	ssl_sha512.c
 
 
 OBJ 		= 	$(addprefix $(DIR_OBJ), $(C_SSL:.c=.o) $(C_MD5:.c=.o)\
-					$(C_SHA:.c=.o))
+					$(C_SHA256:.c=.o) $(C_SHA512:.c=.o))
 
 INC 		= 	$(addprefix -I, $(DIR_INC) $(DIR_LIB_INC))
 INC_SSL 	= 	$(addprefix $(DIR_INC), $(HEAD_SSL))
 INC_MD5 	= 	$(addprefix $(DIR_INC), $(HEAD_SSL) $(HEAD_MD5))
-INC_SHA 	= 	$(addprefix $(DIR_INC), $(HEAD_SSL) $(HEAD_SHA))
+INC_SHA256 	= 	$(addprefix $(DIR_INC), $(HEAD_SSL) $(HEAD_SHA256))
+INC_SHA512 	= 	$(addprefix $(DIR_INC), $(HEAD_SSL) $(HEAD_SHA512))
 
 
 all: lib $(NAME)
@@ -70,8 +75,14 @@ $(DIR_OBJ)%.o: $(DIR_MD5)%.c $(INC_MD5)
 	@$(CC) $(FLAGS) $(INC) -c -o $@ $<
 	@echo "Linking" [ $< ]
 
-#sha
-$(DIR_OBJ)%.o: $(DIR_SHA)%.c $(INC_SHA)
+#sha256
+$(DIR_OBJ)%.o: $(DIR_SHA256)%.c $(INC_SHA256)
+	@mkdir -p $(DIR_OBJ)
+	@$(CC) $(FLAGS) $(INC) -c -o $@ $<
+	@echo "Linking" [ $< ]
+
+#sha512
+$(DIR_OBJ)%.o: $(DIR_SHA512)%.c $(INC_SHA512)
 	@mkdir -p $(DIR_OBJ)
 	@$(CC) $(FLAGS) $(INC) -c -o $@ $<
 	@echo "Linking" [ $< ]
