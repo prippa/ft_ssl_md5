@@ -26,7 +26,8 @@ static void	ssl_validate_file(void)
 			if ((fd = open(g_ssl.argv[g_ssl.i], O_RDONLY)) == -1
 				|| read(fd, NULL, 0) == -1)
 			{
-				perror(g_ssl.argv[g_ssl.i]);
+				perror(ssl_error_str(g_ssl.argv[g_ssl.i]));
+				free(g_ssl.tmp);
 				g_ssl.err_flag = 1;
 			}
 			else
@@ -48,7 +49,7 @@ static int	ssl_check_flags(const char *f)
 			{
 				if (*f == 's')
 				{
-					g_ssl.tmp = f;
+					g_ssl.tmp = (char *)f;
 					if (!(g_hash_flags_func[i]()))
 						return (1);
 					return (0);
@@ -68,32 +69,38 @@ static int	ssl_parse_flags(void)
 	while (g_ssl.argv[g_ssl.i] && *g_ssl.argv[g_ssl.i] == '-')
 	{
 		if ((ssl_check_flags(g_ssl.argv[g_ssl.i] + 1)))
-			return (0);
+			return (1);
 		++g_ssl.i;
 	}
-	return (1);
+	return (0);
 }
 
 static int	ssl_check_cmd(void)
 {
-	int i;
+	int		i;
+	char	*cmd;
 
+	if (!(cmd = ft_strdup(*g_ssl.argv)))
+		ssl_fatal_error(MALLOC_ERR);
+	ft_str_to_lower(&cmd);
 	i = -1;
 	while (++i < SSL_CMD_SIZE)
-		if (!ft_strcmp(*g_ssl.argv, g_string_hash[i]))
+		if (!ft_strcmp(cmd, g_string_hash[i]))
 		{
 			g_ssl.type = i;
 			++g_ssl.i;
-			return (0);
+			free(cmd);
+			return (1);
 		}
-	return (1);
+	free(cmd);
+	return (0);
 }
 
 void		ssl_parser(t_mod mod)
 {
-	if (!ssl_check_cmd())
+	if (ssl_check_cmd())
 	{
-		if (!ssl_parse_flags())
+		if (ssl_parse_flags())
 		{
 			ssl_print_hash_flags_usage(g_ssl.argv[g_ssl.i]);
 			g_ssl.err_flag = 1;

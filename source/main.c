@@ -19,5 +19,5 @@ int		main(int argc, char **argv)
 		ssl_interactive_read();
 	else
 		ssl_parser(BASE_MOD);
-	return (0);
+	return (g_ssl.err_flag);
 }

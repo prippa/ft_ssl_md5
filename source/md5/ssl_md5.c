@@ -52,7 +52,7 @@ static void	ssl_md5_run(t_md5 *md)
 static void	ssl_md5_prepare_hash_string(t_md5 *md)
 {
 	if (!(g_ssl.res_hash_str = (uint8_t *)malloc(sizeof(uint8_t) * 16)))
-		ssl_fatal_error("malloc failed");
+		ssl_fatal_error(MALLOC_ERR);
 	md->i = -1;
 	md->j = 0;
 	while (md->j < 4)

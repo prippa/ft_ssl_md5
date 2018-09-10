@@ -19,18 +19,18 @@ void		ssl_read(int fd, const size_t size)
 
 	if (!(g_ssl.s = ft_memalloc(1))
 		|| !(buf = (char *)malloc(sizeof(char) * size + 1)))
-		ssl_fatal_error("malloc failed");
+		ssl_fatal_error(MALLOC_ERR);
 	g_ssl.size = 0;
 	while ((i = read(fd, buf, size)) > 0)
 	{
 		buf[i] = 0;
-		if (!(g_ssl.s = ft_strjoin_free(&g_ssl.s, buf, g_ssl.size, i)))
-			ssl_fatal_error("malloc failed");
+		if (!(g_ssl.s = ft_memjoin_free((void **)&g_ssl.s, buf, g_ssl.size, i)))
+			ssl_fatal_error(MALLOC_ERR);
 		g_ssl.size += i;
 	}
 	free(buf);
 	if (i == -1)
-		ssl_fatal_error("read failed");
+		ssl_fatal_error(READ_ERR);
 }
 
 void		ssl_read_from_stdin(void)

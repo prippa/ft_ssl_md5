@@ -18,6 +18,4 @@ void		ssl_init(char **argv)
 {
 	ft_bzero(&g_ssl, sizeof(t_ssl));
 	g_ssl.argv = argv + 1;
-	if (*g_ssl.argv)
-		ft_str_to_upper(g_ssl.argv);
 }

@@ -1,0 +1,1 @@
+while sleep 1; clear; do leaks -q ft_ssl; done

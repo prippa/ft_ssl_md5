@@ -19,8 +19,7 @@ static void	ssl_ir_action(const char *line)
 	if (ft_strcmp(line, ""))
 	{
 		if (!(args = ft_strsplit(line, ' ')))
-			ft_perror_exit("malloc failed");
-		ft_str_to_upper(args);
+			ft_perror_exit(MALLOC_ERR);
 		g_ssl.argv = args;
 		ssl_parser(INTERACTIVE_MOD);
 		ft_arrdel(&args);
@@ -33,18 +32,18 @@ void		ssl_interactive_read(void)
 	int		random_error;
 	char	*line;
 
-	ft_putstr("ft_ssl> ");
+	ft_putstr(SSL_CURSOR);
 	while ((random_error = get_next_line(0, &line)) == 1)
 	{
-		if (!ft_strcmp(line, "exit"))
+		if (!ft_strcmp(line, EXIT_CMD))
 		{
 			ft_strdel(&line);
-			break;
+			return ;
 		}
 		ssl_ir_action(line);
 		ft_strdel(&line);
-		ft_putstr("ft_ssl> ");
+		ft_putstr(SSL_CURSOR);
 	}
 	if (random_error == -1)
-		ft_perror_exit("get_next_line failed");
+		ft_perror_exit(READ_ERR);
 }

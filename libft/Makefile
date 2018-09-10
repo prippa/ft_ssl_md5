@@ -47,7 +47,7 @@ C_LIBC		= 	ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c\
 C_FPF		= 	ft_printf.c fpf_cat_data.c fpf_parser.c fpf_trash.c\
 				fpf_parser_get_type.c fpf_conversions.c fpf_unicode.c\
 				fpf_output_sc.c fpf_output_d.c fpf_output_u.c\
-				fpf_output_ox.c fpf_output_p.c fpf_colors.c
+				fpf_output_ox.c fpf_output_p.c fpf_colors.c fpf_bonus_flags.c
 
 
 OBJ 		= 	$(addprefix $(DIR_OBJ), $(C_LIBC:.c=.o) $(C_FPF:.c=.o))

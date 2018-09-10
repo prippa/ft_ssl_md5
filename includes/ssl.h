@@ -17,6 +17,19 @@
 # include <sys/stat.h>
 
 /*
+************************************ Messages **********************************
+*/
+
+# define MALLOC_ERR		"malloc failed"
+# define READ_ERR		"read failed"
+
+# define SSL_CH			"ft_ssl"
+# define SEPARATE_CH	": "
+
+# define SSL_CURSOR		"ft_ssl> "
+# define EXIT_CMD		"exit"
+
+/*
 ************************************ Data **************************************
 */
 
@@ -50,12 +63,12 @@ typedef struct			s_ssl
 	char				f[SSL_FLAG_SIZE];
 	char				file_name[FILENAME_MAX + 1];
 	char				*s;
-	size_t				size;
-	int					i;
+	uint32_t			i;
 	char				err_flag;
 	char				**argv;
-	const char			*tmp;
+	char				*tmp;
 	uint8_t				*res_hash_str;
+	size_t				size;
 }						t_ssl;
 
 /*
@@ -75,6 +88,7 @@ void					ssl_print_error_message(const char *cmd);
 void					ssl_print_usage_exit(const char *cmd);
 void					ssl_interactive_read(void);
 void					ssl_parser(t_mod mod);
+char					*ssl_error_str(const char *file_name);
 
 void					ssl_md5(void);
 void					ssl_sha256(void);
@@ -95,7 +109,7 @@ int						ssl_flag_s(void);
 
 static const char			*g_string_hash[SSL_CMD_SIZE] =
 {
-	"MD5", "SHA256", "SHA512"
+	"md5", "sha256", "sha512"
 };
 
 typedef void	(*t_func_cmd)(void);

@@ -45,7 +45,7 @@ int		ssl_flag_s(void)
 	if (!*++g_ssl.tmp)
 		g_ssl.tmp = g_ssl.argv[++g_ssl.i];
 	if (!(g_ssl.s = ft_strdup(g_ssl.tmp)))
-		ssl_fatal_error("malloc failed");
+		ssl_fatal_error(MALLOC_ERR);
 	g_ssl.size = ft_strlen(g_ssl.s);
 	g_hash_func[g_ssl.type]();
 	ssl_print_hash();

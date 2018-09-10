@@ -24,7 +24,7 @@ static void	ssl_print_hash_s(void)
 	}
 	else
 	{
-		ft_printf("%s (\"%s\") = ", g_string_hash[g_ssl.type], g_ssl.s);
+		ft_printf("%^s (\"%s\") = ", g_string_hash[g_ssl.type], g_ssl.s);
 		ssl_print_hash_str();
 		ft_putchar('\n');
 	}
@@ -39,7 +39,7 @@ static void	ssl_print_hash_file(void)
 	}
 	else
 	{
-		ft_printf("%s (%s) = ", g_string_hash[g_ssl.type], g_ssl.file_name);
+		ft_printf("%^s (%s) = ", g_string_hash[g_ssl.type], g_ssl.file_name);
 		ssl_print_hash_str();
 		ft_putchar('\n');
 	}
@@ -47,7 +47,7 @@ static void	ssl_print_hash_file(void)
 
 void		ssl_print_hash(void)
 {
-	if (g_ssl.f[SSL_FLAG_Q])
+	if (g_ssl.f[SSL_FLAG_Q] || !g_ssl.curent)
 	{
 		ssl_print_hash_str();
 		ft_putchar('\n');
