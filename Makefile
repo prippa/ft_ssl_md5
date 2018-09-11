@@ -39,7 +39,7 @@ C_MD5		= 	ssl_md5.c ssl_md5_rounds.c
 
 C_SHA256	= 	ssl_sha256.c ssl_sha224.c ssl_sha256_algo.c
 
-C_SHA512	= 	ssl_sha512.c
+C_SHA512	= 	ssl_sha512.c ssl_sha512_algo.c ssl_sha512_helpers.c
 
 
 OBJ 		= 	$(addprefix $(DIR_OBJ), $(C_SSL:.c=.o) $(C_MD5:.c=.o)\
