@@ -68,6 +68,8 @@ static int	ssl_parse_flags(void)
 {
 	while (g_ssl.argv[g_ssl.i] && *g_ssl.argv[g_ssl.i] == '-')
 	{
+		if (!g_ssl.argv[g_ssl.i] + 1)
+			return (1);
 		if ((ssl_check_flags(g_ssl.argv[g_ssl.i] + 1)))
 			return (1);
 		++g_ssl.i;
