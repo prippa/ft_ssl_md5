@@ -24,9 +24,13 @@ void		ssl_print_hash_flags_usage(const char *cmd)
 
 static void	ssl_print_commands(void)
 {
+	int i;
+
 	ft_putstr("\nStandard commands:\n");
 	ft_putstr("\nMessage Digest commands:\n");
-	ft_putstr("md5\nsha256\nsha512\n");
+	i = -1;
+	while (++i < SSL_CMD_SIZE)
+		ft_printf("%s\n", g_string_hash[i]);
 	ft_putstr("\nCipher commands:\n\n");
 }
 

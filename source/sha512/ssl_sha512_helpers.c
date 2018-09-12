@@ -2,7 +2,7 @@
 
 void		ssl_sha512_increment_bitlen(t_sha512 *sh, uint16_t size)
 {
-	if (size < 1)
+	if (!size)
 		return ;
 	if (sh->bitlen[sh->biti] + size > sh->bitlen[sh->biti])
 		sh->bitlen[sh->biti] += size;

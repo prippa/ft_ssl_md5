@@ -26,7 +26,6 @@
 
 # define ROTLEFT32(a,b) (((a) << (b)) | ((a) >> (32-(b))))
 # define ROTRIGHT32(a,b) (((a) >> (b)) | ((a) << (32-(b))))
-# define ROTLEFT64(a,b) (((a) << (b)) | ((a) >> (64-(b))))
 # define ROTRIGHT64(a,b) (((a) >> (b)) | ((a) << (64-(b))))
 
 /*
@@ -49,7 +48,7 @@
 extern struct s_ssl		g_ssl;
 
 # define SSL_BUF_SIZE	4096
-# define SSL_CMD_SIZE	4
+# define SSL_CMD_SIZE	7
 
 typedef enum			e_mod
 {
@@ -106,7 +105,10 @@ char					*ssl_error_str(const char *file_name);
 void					ssl_md5(void);
 void					ssl_sha224(void);
 void					ssl_sha256(void);
+void					ssl_sha384(void);
 void					ssl_sha512(void);
+void					ssl_sha512_224(void);
+void					ssl_sha512_256(void);
 
 int						ssl_flag_p(void);
 int						ssl_flag_q(void);
@@ -123,13 +125,15 @@ int						ssl_flag_s(void);
 
 static const char			*g_string_hash[SSL_CMD_SIZE] =
 {
-	"md5", "sha224", "sha256", "sha512"
+	"md5", "sha224", "sha256", "sha384",
+	"sha512", "sha512/224", "sha512/256"
 };
 
 typedef void	(*t_func_cmd)(void);
 static const t_func_cmd	g_hash_func[SSL_CMD_SIZE] =
 {
-	ssl_md5, ssl_sha224, ssl_sha256, ssl_sha512
+	ssl_md5, ssl_sha224, ssl_sha256, ssl_sha384,
+	ssl_sha512, ssl_sha512_224, ssl_sha512_256
 };
 
 /*
