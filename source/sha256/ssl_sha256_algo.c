@@ -1,6 +1,6 @@
 #include "sha256.h"
 
-void	ssl_sha256_prepare_hash_string(t_sha256 *sh, uint32_t size)
+void	ssl_sha256_prepare_hash_string(t_sha256 *sh, uint16_t size)
 {
 	if (!(g_ssl.res_hash_str = (uint8_t *)malloc(sizeof(uint8_t) * size)))
 		ssl_fatal_error(MALLOC_ERR);
@@ -61,14 +61,10 @@ static void	ssl_sha256_algo(t_sha256 *sh)
 
 void		ssl_sha256_transform(t_sha256 *sh)
 {
+	sh->words = (uint32_t *)sh->data;
 	sh->i = -1;
-	sh->j = 0;
 	while (++sh->i < 16)
-	{
-		sh->m[sh->i] = (sh->data[sh->j] << 24) | (sh->data[sh->j + 1] << 16) |
-			(sh->data[sh->j + 2] << 8) | (sh->data[sh->j + 3]);
-		sh->j += 4;
-	}
+		sh->m[sh->i] = __builtin_bswap32(sh->words[sh->i]);
 	while (sh->i < 64)
 	{
 		sh->m[sh->i] = SIG1(sh->m[sh->i - 2]) +
@@ -77,19 +73,14 @@ void		ssl_sha256_transform(t_sha256 *sh)
 	}
 	ft_memcpy(sh->t, sh->state, 32);
 	ssl_sha256_algo(sh);
-	sh->state[0] += sh->t[0];
-	sh->state[1] += sh->t[1];
-	sh->state[2] += sh->t[2];
-	sh->state[3] += sh->t[3];
-	sh->state[4] += sh->t[4];
-	sh->state[5] += sh->t[5];
-	sh->state[6] += sh->t[6];
-	sh->state[7] += sh->t[7];
+	sh->i = -1;
+	while (++sh->i < 8)
+		sh->state[sh->i] += sh->t[sh->i];
 }
 
 void		ssl_sha256_run(t_sha256 *sh)
 {
-	uint32_t i;
+	size_t i;
 
 	i = -1;
 	while (++i < g_ssl.size)

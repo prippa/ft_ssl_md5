@@ -30,22 +30,15 @@ static void	ssl_md5_prepare_hash_string(t_md5 *md)
 
 static void	ssl_md5_transform(t_md5 *md)
 {
-	md->i = 0;
-	md->j = 0;
-	while (md->i < 16)
-	{
-		md->m[md->i++] = (md->data[md->j]) +
-					(md->data[md->j + 1] << 8) +
-					(md->data[md->j + 2] << 16) +
-					(md->data[md->j + 3] << 24);
-		md->j += 4;
-	}
+	md->words = (uint32_t *)md->data;
+	md->i = -1;
+	while (++md->i < 16)
+		md->m[md->i] = md->words[md->i];
 	ft_memcpy(md->t, md->state, 16);
 	ssl_md5_start_raunds(md);
-	md->state[0] += md->t[0];
-	md->state[1] += md->t[1];
-	md->state[2] += md->t[2];
-	md->state[3] += md->t[3];
+	md->i = -1;
+	while (++md->i < 4)
+		md->state[md->i] += md->t[md->i];
 }
 
 static void	ssl_md5_finish(t_md5 *md)
@@ -74,7 +67,7 @@ static void	ssl_md5_finish(t_md5 *md)
 
 static void	ssl_md5_run(t_md5 *md)
 {
-	uint32_t i;
+	size_t i;
 
 	i = -1;
 	while (++i < g_ssl.size)

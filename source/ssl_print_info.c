@@ -14,7 +14,7 @@
 
 void		ssl_print_hash_flags_usage(const char *cmd)
 {
-	ft_printf("unknown option '%s'\n", cmd);
+	ft_dprintf(2, "unknown option '%s'\n", cmd);
 	ft_putstr("options are\n");
 	ft_putstr("-p\t\techo STDIN to STDOUT and append the checksum to STDOUT\n");
 	ft_putstr("-q\t\tquiet mode\n");
@@ -32,7 +32,7 @@ static void	ssl_print_commands(void)
 
 void		ssl_print_error_message(const char *cmd)
 {
-	ft_printf("ft_ssl: Error: '%s' is an invalid command.\n", cmd);
+	ft_dprintf(2, "ft_ssl: Error: '%s' is an invalid command.\n", cmd);
 	ssl_print_commands();
 }
 

@@ -17,10 +17,10 @@
 
 # define CH(x,y,z) (((x) & (y)) ^ (~(x) & (z)))
 # define MAJ(x,y,z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
-# define EP0(x) (ROTRIGHT(x,2) ^ ROTRIGHT(x,13) ^ ROTRIGHT(x,22))
-# define EP1(x) (ROTRIGHT(x,6) ^ ROTRIGHT(x,11) ^ ROTRIGHT(x,25))
-# define SIG0(x) (ROTRIGHT(x,7) ^ ROTRIGHT(x,18) ^ ((x) >> 3))
-# define SIG1(x) (ROTRIGHT(x,17) ^ ROTRIGHT(x,19) ^ ((x) >> 10))
+# define EP0(x) (ROTRIGHT32(x,2) ^ ROTRIGHT32(x,13) ^ ROTRIGHT32(x,22))
+# define EP1(x) (ROTRIGHT32(x,6) ^ ROTRIGHT32(x,11) ^ ROTRIGHT32(x,25))
+# define SIG0(x) (ROTRIGHT32(x,7) ^ ROTRIGHT32(x,18) ^ ((x) >> 3))
+# define SIG1(x) (ROTRIGHT32(x,17) ^ ROTRIGHT32(x,19) ^ ((x) >> 10))
 
 static const uint32_t t_k[64] =
 {
@@ -44,6 +44,7 @@ typedef struct 			s_sha256
 	uint32_t			state[8];
 	uint32_t			t[8];
 	uint32_t			m[64];
+	uint32_t			*words;
 	uint32_t			i;
 	uint32_t			j;
 	uint32_t			tmp1;
@@ -54,6 +55,6 @@ void					ssl_sha256_run(t_sha256 *sh);
 void					ssl_sha256_transform(t_sha256 *sh);
 void					ssl_sha256_finish(t_sha256 *sh);
 void					ssl_sha256_prepare_hash_string(t_sha256 *sh,
-							uint32_t size);
+							uint16_t size);
 
 #endif

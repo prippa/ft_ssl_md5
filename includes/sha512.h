@@ -5,10 +5,10 @@
 
 # define CH(x,y,z) (((x) & (y)) ^ (~(x) & (z)))
 # define MAJ(x,y,z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
-# define EP0(x) (ROTRIGHT(x,28) ^ ROTRIGHT(x,34) ^ ROTRIGHT(x,39))
-# define EP1(x) (ROTRIGHT(x,14) ^ ROTRIGHT(x,18) ^ ROTRIGHT(x,41))
-# define SIG0(x) (ROTRIGHT(x,1) ^ ROTRIGHT(x,8) ^ ((x) >> 7))
-# define SIG1(x) (ROTRIGHT(x,19) ^ ROTRIGHT(x,61) ^ ((x) >> 6))
+# define EP0(x) (ROTRIGHT64(x,28) ^ ROTRIGHT64(x,34) ^ ROTRIGHT64(x,39))
+# define EP1(x) (ROTRIGHT64(x,14) ^ ROTRIGHT64(x,18) ^ ROTRIGHT64(x,41))
+# define SIG0(x) (ROTRIGHT64(x,1) ^ ROTRIGHT64(x,8) ^ ((x) >> 7))
+# define SIG1(x) (ROTRIGHT64(x,19) ^ ROTRIGHT64(x,61) ^ ((x) >> 6))
 
 static const uint64_t t_k[80] =
 {
@@ -45,16 +45,24 @@ typedef struct 			s_sha512
 {
 	uint8_t				biti;
 	uint64_t			bitlen[2];
-	uint8_t				data[80];
+	uint8_t				data[128];
 	uint32_t			datalen;
 	uint64_t			state[8];
 	uint64_t			t[8];
 	uint64_t			m[80];
+	uint64_t			*words;
 	uint32_t			i;
 	uint32_t			j;
+	uint64_t			tmp1;
+	uint64_t			tmp2;
 }						t_sha512;
 
+void					ssl_sha512_run(t_sha512 *sh);
+void					ssl_sha512_transform(t_sha512 *sh);
+void					ssl_sha512_finish(t_sha512 *sh);
 void					ssl_sha512_increment_bitlen(t_sha512 *sh,
+							uint16_t size);
+void					ssl_sha512_prepare_hash_string(t_sha512 *sh,
 							uint16_t size);
 
 #endif
