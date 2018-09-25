@@ -12,7 +12,7 @@
 
 NAME		=	ft_ssl
 FLAGS		= 	-Wall -Werror -Wextra
-CC			=	gcc -g
+CC			=	gcc
 
 DIR_INC		=	./includes/
 DIR_SRC		=	./source/
