@@ -44,5 +44,5 @@ void		ssl_print_usage_exit(const char *cmd)
 {
 	ft_putstr("usage: ft_ssl command [command opts] [command args]\n");
 	ssl_print_error_message(cmd);
-	exit (-1);
+	exit(-1);
 }

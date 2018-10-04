@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ssl_sha256_algo.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/04 12:09:55 by prippa            #+#    #+#             */
+/*   Updated: 2018/10/04 12:09:56 by prippa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sha256.h"
 
-void	ssl_sha256_prepare_hash_string(t_sha256 *sh, uint16_t size)
+void		ssl_sha256_prepare_hash_string(t_sha256 *sh, uint16_t size)
 {
 	if (!(g_ssl.res_hash_str = (uint8_t *)malloc(sizeof(uint8_t) * size)))
 		ssl_fatal_error(MALLOC_ERR);
@@ -46,7 +58,7 @@ static void	ssl_sha256_algo(t_sha256 *sh)
 	while (++sh->i < 64)
 	{
 		sh->tmp1 = sh->t[7] + EP1(sh->t[4]) +
-			CH(sh->t[4], sh->t[5], sh->t[6]) + t_k[sh->i] + sh->m[sh->i];
+			CH(sh->t[4], sh->t[5], sh->t[6]) + g_k[sh->i] + sh->m[sh->i];
 		sh->tmp2 = EP0(sh->t[0]) + MAJ(sh->t[0], sh->t[1], sh->t[2]);
 		sh->t[7] = sh->t[6];
 		sh->t[6] = sh->t[5];

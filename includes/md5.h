@@ -25,7 +25,7 @@
 # define HH(a,b,c,d,m,s,t) { a += H(b,c,d) + m + t; a = b + ROTLEFT32(a,s); }
 # define II(a,b,c,d,m,s,t) { a += I(b,c,d) + m + t; a = b + ROTLEFT32(a,s); }
 
-typedef struct 			s_md5
+typedef struct			s_md5
 {
 	uint8_t				data[64];
 	uint32_t			datalen;

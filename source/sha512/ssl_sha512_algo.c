@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ssl_sha512_algo.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/04 12:10:13 by prippa            #+#    #+#             */
+/*   Updated: 2018/10/04 12:10:15 by prippa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "sha512.h"
 
 void		ssl_sha512_finish(t_sha512 *sh)
@@ -27,13 +39,13 @@ void		ssl_sha512_finish(t_sha512 *sh)
 	ssl_sha512_transform(sh);
 }
 
-void		 ssl_sha512_algo(t_sha512 *sh)
+void		ssl_sha512_algo(t_sha512 *sh)
 {
 	sh->i = -1;
 	while (++sh->i < 80)
 	{
 		sh->tmp1 = sh->t[7] + EP1(sh->t[4]) +
-			CH(sh->t[4], sh->t[5], sh->t[6]) + t_k[sh->i] + sh->m[sh->i];
+			CH(sh->t[4], sh->t[5], sh->t[6]) + g_k[sh->i] + sh->m[sh->i];
 		sh->tmp2 = EP0(sh->t[0]) + MAJ(sh->t[0], sh->t[1], sh->t[2]);
 		sh->t[7] = sh->t[6];
 		sh->t[6] = sh->t[5];

@@ -22,7 +22,7 @@
 # define SIG0(x) (ROTRIGHT32(x,7) ^ ROTRIGHT32(x,18) ^ ((x) >> 3))
 # define SIG1(x) (ROTRIGHT32(x,17) ^ ROTRIGHT32(x,19) ^ ((x) >> 10))
 
-static const uint32_t t_k[64] =
+static const uint32_t g_k[64] =
 {
 	0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1,
 	0x923f82a4, 0xab1c5ed5, 0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
@@ -37,7 +37,7 @@ static const uint32_t t_k[64] =
 	0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
 };
 
-typedef struct 			s_sha256
+typedef struct			s_sha256
 {
 	uint8_t				data[64];
 	uint32_t			datalen;

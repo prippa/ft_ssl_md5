@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sha512.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: prippa <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/10/04 12:04:46 by prippa            #+#    #+#             */
+/*   Updated: 2018/10/04 12:04:47 by prippa           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SHA512_H
 # define SHA512_H
 
@@ -10,7 +22,7 @@
 # define SIG0(x) (ROTRIGHT64(x,1) ^ ROTRIGHT64(x,8) ^ ((x) >> 7))
 # define SIG1(x) (ROTRIGHT64(x,19) ^ ROTRIGHT64(x,61) ^ ((x) >> 6))
 
-static const uint64_t t_k[80] =
+static const uint64_t g_k[80] =
 {
 	0x428a2f98d728ae22, 0x7137449123ef65cd, 0xb5c0fbcfec4d3b2f,
 	0xe9b5dba58189dbbc, 0x3956c25bf348b538, 0x59f111f1b605d019,
@@ -41,7 +53,7 @@ static const uint64_t t_k[80] =
 	0x5fcb6fab3ad6faec, 0x6c44198c4a475817
 };
 
-typedef struct 			s_sha512
+typedef struct			s_sha512
 {
 	uint8_t				biti;
 	uint64_t			bitlen[2];
